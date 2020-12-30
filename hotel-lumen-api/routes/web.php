@@ -44,6 +44,14 @@ $router->group(['prefix'=>'api', 'middleware' => 'auth'],function($router){
         $router->delete('deleteStoreProduct/{productId}','StoreController@deleteStoreElementRecord');
     });
 
+    // this routes will used for table api
+    $router->group(['prefix'=>'hotelTable'],function($router){
+        $router->get('list', 'HotelTableController@show');
+        $router->post('save', 'HotelTableController@store');
+        $router->put('update/{tableId}', 'HotelTableController@update');
+        $router->delete('delete/{tableId}', 'HotelTableController@destroy');
+    });
+
     // this routes will used for products realted api
     $router->group(['prefix'=>'products'],function($router){
         $router->get('getAllProducts','UsersController@getAllUsers');
