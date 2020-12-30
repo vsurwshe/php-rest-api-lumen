@@ -60,6 +60,13 @@ $router->group(['prefix'=>'api', 'middleware' => 'auth'],function($router){
         $router->put('updateProduct/{id}','UsersController@updateUser');
         $router->delete('deleteProduct/{id}','UsersController@deleteUser');
     });
+
+    $router->group(['prefix'=>'food'],function($router){
+        $router->get('list', 'FoodController@show');
+        $router->post('save', 'FoodController@saveFoodElementRecord');
+        $router->put('update/{foodId}', 'FoodController@update');
+        $router->delete('delete/{foodId}', 'FoodController@destroy');
+    });
     
 });
 
