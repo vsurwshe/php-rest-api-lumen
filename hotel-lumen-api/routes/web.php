@@ -40,8 +40,8 @@ $router->group(['prefix'=>'api', 'middleware' => 'auth'],function($router){
         $router->get('getAllStoreProduct','StoreController@getAllStoreElements');
         $router->get('getStoreProduct/{id}','StoreController@getUsersById');
         $router->post('saveStoreProduct','StoreController@saveStoreElementRecord');
-        $router->put('updateStoreProduct/{id}','StoreController@updateStoreElementRecord');
-        $router->delete('deleteStoreProduct/{id}','StoreController@deleteStoreElementRecord');
+        $router->put('updateStoreProduct/{productId}','StoreController@updateStoreElementRecord');
+        $router->delete('deleteStoreProduct/{productId}','StoreController@deleteStoreElementRecord');
     });
 
     // this routes will used for products realted api

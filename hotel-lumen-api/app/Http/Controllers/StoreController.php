@@ -33,25 +33,21 @@ class StoreController extends Controller
             if($validator->fails()){
                 return response()->json(['message'=>$validator->messages(),'data'=>null],400);
             }
-    
             $user = $this->request->user();
-            $store= new Store();
-            $store->product_name=$request->input('product_name');
-            $store->product_qty=$request->input('product_qty');
-            $store->product_unit_price=$request->input('product_unit_price');
-            $store->product_total_price=$request->input('product_total_price');
-            // this will configure the user id
-            $store->user_id=$user->id;
-            
-            // this will save the records
-            $store->save();       
-            return response()->json(['message'=>'success','data'=>$store],200);
+            $request->request->add(['user_id' => $user->id]);
+            $store=$request->all();
+            $result=Store::create($store);
+            if($result){
+                return response()->json(['message'=>'Successfully created store product', "data"=>$result ],200);
+            }else{
+                return response()->json(['message'=>'Successfully not created store product'],400);
+            }
         } catch (\Exception $th) {
             return response()->json(['message'=>$th->getMessage()],400);
         }
     }
     
-    public function updateStoreElementRecord(Request $request, string $productId){
+    public function updateStoreElementRecord($productId, Request $request){
         try {
             $validator = $this->validateStore();
             if($validator->fails()){
@@ -69,7 +65,7 @@ class StoreController extends Controller
         }
     }
 
-    public function deleteStoreElementRecord(Request $request, string $productId){
+    public function deleteStoreElementRecord($productId, Request $request){
         try {
             $stores = Store::where('store_id',$productId)->delete();
             if($stores){
@@ -86,8 +82,7 @@ class StoreController extends Controller
         return Validator::make(request()->all(), [
             'store_product_name' => 'required',
             'store_product_qty' => 'required',
-            'store_product_total_price' => 'required',
-            'user_id' => 'required',
+            'store_product_total_price' => 'required'
         ]);
     }
 }
