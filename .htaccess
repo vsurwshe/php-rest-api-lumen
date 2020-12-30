@@ -1,0 +1,8 @@
+Options +Indexes 
+# or #
+indexOptions +FancyIndexing
+
+#Options -MultiViews
+#RewriteEngine On
+#RewriteCond %{REQUEST_FILENAME} !-f
+#RewriteRule ^ app/index.html [QSA,L]
