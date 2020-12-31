@@ -61,12 +61,37 @@ $router->group(['prefix'=>'api', 'middleware' => 'auth'],function($router){
         $router->delete('deleteProduct/{id}','UsersController@deleteUser');
     });
 
+    // this routes will used for food api
     $router->group(['prefix'=>'food'],function($router){
         $router->get('list', 'FoodController@show');
         $router->post('save', 'FoodController@saveFoodElementRecord');
         $router->put('update/{foodId}', 'FoodController@update');
         $router->delete('delete/{foodId}', 'FoodController@destroy');
     });
-    
+
+    // this routes will used for invoice api
+    $router->group(['prefix'=>'invoice'],function($router){
+        $router->get('list', 'InvoiceController@show');
+        $router->post('save', 'InvoiceController@saveInvoiceElementRecord');
+        $router->put('update/{invoiceId}', 'InvoiceController@update');
+        $router->delete('delete/{invoiceId}', 'InvoiceController@destroy');
+    });
+
+    // this routes will used for invoice api
+    $router->group(['prefix'=>'orders/table'],function($router){
+        $router->get('freeTabelList', 'FreeTabelController@show');
+        $router->get('bookedTabelList', 'BookedTabelController@show');
+        $router->post('save', 'BookedTabelController@store');
+        $router->put('update/{orderTabelId}', 'BookedTabelController@update');
+        $router->delete('delete/{orderTabelId}', 'BookedTabelController@destroy');
+    });
+
+    // this routes will used for invoice api
+    $router->group(['prefix'=>'orders/food'],function($router){
+        $router->get('list/{orderTbleId}', 'OrderFoodController@getOrdersByTabelId');
+        $router->post('save', 'OrderFoodController@store');
+        $router->put('update/{orderFoodId}', 'OrderFoodController@update');
+        $router->delete('delete/{orderFoodId}', 'OrderFoodController@destroy');
+    });
 });
 
