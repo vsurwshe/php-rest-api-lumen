@@ -110,7 +110,7 @@ class BookedTabelController extends Controller
      * @param  \App\Models\bookedTabel  $bookedTabel
      * @return \Illuminate\Http\Response
      */
-    public function destroy(string $orderTabelId){
+    public function destroy($orderTabelId){
         try {
             $updateResult= HotelTable::where('table_id',$orderTabelId)->update(array('table_booked'=>0));
             $result = BookedTabel::where('table_id',$orderTabelId)->delete();

@@ -7,12 +7,15 @@ use App\Models\User;
 use App\Models\InvoiceItem;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Validator;
+use App\Http\Controllers\BookedTabelController;
 
 class InvoiceController extends Controller
 {
     protected $request;
+    public $bookedTabelController;
     public function __construct(Request $request) {
         $this->request = $request;
+        $this->bookedTabelController= new BookedTabelController($request);
     }
     /**
      * Store a newly created resource in storage.
@@ -43,8 +46,13 @@ class InvoiceController extends Controller
                 $invoice->save();
                 foreach($invoiceItemList as $item){
                     $this->saveInvoiceItem($item,$invoice->id);
-                }                
-                return response()->json(['message'=>'Successfully saved invoice','data'=>$invoice],200);
+                }
+                if($invoice){
+                    $result = $this->bookedTabelController->destroy($request->input('invoice_table'));
+                    return response()->json(['message'=>'Successfully saved invoice','data'=>$invoice],200);
+                }else{
+                    return response()->json(['message'=>'Successfully not saved invoice','data'=>$invoice],400);
+                }
             }
         } catch (\Exception $th) {
             return response()->json(['message'=>$th->getMessage()],400);
