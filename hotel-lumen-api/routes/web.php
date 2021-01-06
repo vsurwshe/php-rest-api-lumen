@@ -72,6 +72,7 @@ $router->group(['prefix'=>'api', 'middleware' => 'auth'],function($router){
     // this routes will used for invoice api
     $router->group(['prefix'=>'invoice'],function($router){
         $router->get('list', 'InvoiceController@show');
+        $router->get('getData/{invoiceId}', 'InvoiceController@getInvoiceById');
         $router->post('save', 'InvoiceController@saveInvoiceElementRecord');
         $router->put('update/{invoiceId}', 'InvoiceController@update');
         $router->delete('delete/{invoiceId}', 'InvoiceController@destroy');

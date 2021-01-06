@@ -127,6 +127,30 @@ class InvoiceController extends Controller
         }
     }
 
+    public function getInvoiceById($invoiceId)
+    {
+        try {
+            $invoice = Invoice::where('invoice_id',$invoiceId)->get();
+            $invoiceItem= InvoiceItem::where('invoice_id',$invoiceId)->get();
+            $resultInvoice=array(
+                "invoice_id"=>$invoice[0]->invoice_id,
+                "created_at"=>$invoice[0]->created_at,
+                "invoice_table"=>$invoice[0]->invoice_table,
+                "invoice_sub_total"=>$invoice[0]->invoice_sub_total,
+                "invoice_gst"=>$invoice[0]->invoice_gst,
+                "invoice_total_price"=>$invoice[0]->invoice_total_price,
+                "invoice_item"=>$invoiceItem
+            );
+            if($invoice){
+                return response()->json(['message'=>'Successfully fetched invoice by id '.$invoiceId, 'data'=> $resultInvoice],200);
+            }else{
+                return response()->json(['message'=>'Successfully not fetched invoice by id '.$invoiceId],404);
+            }
+        } catch (\Exception $th) {
+            return response()->json(['message'=>$th->getMessage()],400);
+        }
+    }
+
     public function validateStore(){
         return Validator::make(request()->all(), [
             'invoice_table' => 'required',
