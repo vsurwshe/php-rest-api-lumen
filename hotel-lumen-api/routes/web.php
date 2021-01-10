@@ -94,5 +94,23 @@ $router->group(['prefix'=>'api', 'middleware' => 'auth'],function($router){
         $router->put('update/{orderFoodId}', 'OrderFoodController@update');
         $router->delete('delete/{orderFoodId}', 'OrderFoodController@destroy');
     });
+
+    // this routes will used for invoice api
+    $router->group(['prefix'=>'room'],function($router){
+        $router->get('list', 'RoomController@getListOfRoom');
+        $router->get('list/bookedRoom', 'RoomController@getListOfBookedRoom');
+        $router->get('list/freeRoom', 'RoomController@getListOfFreeRoom');
+        $router->get('list/todayCheckOutRooms', 'RoomController@getListOfTodayCheckOutRoom');
+        $router->get('list/customer', 'RoomController@getTotalCountOfCustomer');
+        $router->get('getBookingDetails/{roomBookingId}', 'RoomController@getRoomBookingDetails');
+        $router->post('saveRoomBooking', 'RoomController@saveBookRoomDetails');
+        $router->put('updateRoomBooking/{roomBookingId}', 'RoomController@updateBookRoomDetails');
+        $router->delete('deleteRoomBooking/{roomBookingId}', 'RoomController@deleteBookRoomDetails');
+        // -------------- Room releated service
+        $router->get('getDetails/{roomId}', 'RoomController@getRoomDetails');
+        $router->post('saveRoom', 'RoomController@saveRoomDetails');
+        $router->put('updateRoom/{roomId}', 'RoomController@updateRoomDetails');
+        $router->delete('deleteRoom/{roomId}', 'RoomController@deleteRoomDetails');
+    });
 });
 
