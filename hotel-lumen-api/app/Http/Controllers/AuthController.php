@@ -35,17 +35,25 @@ class AuthController extends Controller
     public function register(Request $request)
     {
         //validate incoming request 
-        $this->validate($request, [
-            'name'=>'required',
-            'email'=>'required|string|unique:users',
+        $validator = Validator::make($request->all(), [
+            'name' => 'required',
+            'email' =>'required|unique:users',
             'mobile_number'=>'required',
             'company_name'=>'required',
             'company_address'=>'required',
             'adhar_number'=>'required',
             'pan_number'=>'required',
-            'password' => 'required',
+            'password'=>'required',
+            'role'=>'required'
         ]);
-
+        //if validation fails 
+        if ($validator->fails()) {
+            return response()->json(
+            array(
+                'error' => true,
+                'message' => $validator->errors()->all()
+            ),409);
+        }
         try 
         {
             $user = new User;
@@ -56,9 +64,9 @@ class AuthController extends Controller
             $user->company_address= $request->input('company_address');
             $user->adhar_number= $request->input('adhar_number');
             $user->pan_number= $request->input('pan_number');
+            $user->role= $request->input('role');
             $user->password = app('hash')->make($request->input('password'));
             $user->save();
-
             return response()->json( [
                         'entity' => 'users', 
                         'action' => 'create', 

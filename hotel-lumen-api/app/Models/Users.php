@@ -21,6 +21,7 @@ class Users extends Model implements AuthenticatableContract, AuthorizableContra
         'company_address',
         'adhar_number',
         'pan_number',
+        'role',
         'password'
     ];
 

@@ -36,7 +36,8 @@ class UsersController extends Controller
             'company_address'=>'required',
             'adhar_number'=>'required',
             'pan_number'=>'required',
-            'password'=>'required'
+            'password'=>'required',
+            'role'=>'required'
         ]);
         //if validation fails 
         if ($validator->fails()) {

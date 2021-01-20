@@ -35,7 +35,7 @@ class HotelTableController extends Controller
             if($result){
                 return response()->json(['message'=>'Successfully created hotel table', "data"=>$result ],200);
             }else{
-                return response()->json(['message'=>'Successfully not created hotel table'],400);
+                throw new \Exception('Successfully not created hotel table');
             }
         } catch (\Exception $th) {
             return response()->json(['message'=>$th->getMessage()],400);
@@ -69,7 +69,7 @@ class HotelTableController extends Controller
             if($result){
                 return response()->json(['message'=>'Successfully updated table by id '.$result, "data"=>$updatedHotelTable ],200);
             }else{
-                return response()->json(['message'=>'Successfully not updated table by id '.$result],404);
+                throw new Exception("Successfully not updated table by id $result");
             }
         } catch (\Exception $th) {
             return response()->json(['message'=>$th->getMessage()],400);
